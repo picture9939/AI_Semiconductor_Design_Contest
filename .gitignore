@@ -1,0 +1,6 @@
+.vscode/
+sim/*.vcd
+*.log
+*.out
+*.drc
+*.mapped.v
