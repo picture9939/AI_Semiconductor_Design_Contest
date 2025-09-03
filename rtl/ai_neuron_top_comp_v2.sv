@@ -22,7 +22,7 @@ module ai_neuron_top_comp_v2 #( // ai_neuron_top_comp_v2.sv 라는 모듈 정의
     // 이벤트 (스파이크) 발생에 따라 필요한 블록만 활성화하여 전력을 관리하는 부분
     logic core_en, plasticity_en; // 각각 뉴런 코어와 가소성 로직을 활성화시키는 enable tlsgh
     logic decay_active; //뉴런의 막 전위가 감쇠 (decay) 중임을 나타내는 신호
-    power_manager #(.N(N)) u_pwr ( // power_mager 모듈을 u_pwr 라는 이름으로 인스턴스화
+    power_manager #(.N(N)) u_pwr ( // power_manager 모듈을 u_pwr 라는 이름으로 인스턴스화
         .clk(clk), .reset(reset), // u_pwr 모듈의 동작에 필요한 입력 신호들을 연결
         .spike_in(spike_in), .spike_out(spike_out), .decay_active(decay_active),
         .core_en(core_en), .plasticity_en(plasticity_en) // u_pwr 모듈이 생성한 코어 및 가소성 enable 신호를 출력받습니다
