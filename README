@@ -1,81 +1,93 @@
-I.      Course Title:
+1단계: 시스템 깨우기 (Power Manager)
 
-        6.0 Cadence RTL to GDSII - Course Database
+입력: spike_in[5] = 1
 
-II.     Course Developer:
+power_manager 모듈이 이 입력을 즉시 감지합니다.
 
-        Pamula Sai Srinivas pamulasa@cadence.com
+동작:
 
-III.    Minimum Hardware Requirements:
-	Make sure you have installed all the software needed for these labs. 
-	Look up the hardware (HW) requirements for the software from 
-	http://downloads.cadence.com 
+|spike_in 신호가 1이 되므로, core_en과 plasticity_en 신호를 1로 만들어 뉴런 코어와 학습 로직을 잠에서 깨웁니다. "일할 시간이야!" 라고 알려주는 것이죠.
 
-	For some software, you can also run checkSysConf <RelName>.
-	To see a list of software that allows checkSysConf, use 
-	checkSysConf -r
+동시에 tail_active 플래그를 1로 켜서, 당분간 입력이 없더라도 뉴런 내부 활동이 끝날 때까지 코어를 켜두도록 준비합니다.
 
-	We do not require parallel processing for these labs, but a parallel processing step 
-	might require additional setup and HW.
+2단계: 신호 전파 준비 (Dynamic Synapse Processor)
 
-	Lab requirement - retain at least 500 MB for the course 
-	duration for saving of intermediate files and designs.
+입력: spike_in[5] = 1, en = 1
 
-IV.     Software Products Required:
+dynamic_synapse_processor_stream 모듈이 5번 뉴런의 스파이크를 확인합니다.
 
-	An X-Window environment is required to run the software.
-        
-	This course uses the following software:
-		Xcelium Simulator (XCELIUM2309)
-		Integrated Metric Center (VMANAGER2309,XCELIUM2309)
-		Genus Synthesis Solution (GENUS231)
-		Encounter Test or Modus (MODUS231)
-		Conformal Logic Equivalence Checker (CONFRML232)
-		Innovus Implementation System (INNOVUS231)
-		Tempus Timing Signoff Solution (SSV231)
-		Voltus Power Signoff Solution (SSV231)
-		Quantus RC Extraction (SSV231)
+동작:
 
-        Software reference Manuals are available online at http://support.cadence.com.
+"누구랑 친구지?": 5번 뉴런의 '주소록'을 요청하기 위해 weight_ram에게 rd_start=1, rd_pre=5 신호를 보냅니다.
 
-V.      Loading and Set Up of Database
-	Once you have the database, make sure that the files inside are complete and not corrupt.
-	If it is a tar,gz, you will have to:
-	tar zxvf <filename.tar.gz>
-	OR
-	gunzip <filename.tar.gz>
-	tar xvf <filename.tar>
+동적 상태 업데이트: 동시에, 5번 뉴런 자신의 내부 상태 변수(u, x)를 업데이트하여 다음 스파이크에 대한 반응성을 조절합니다 (Tsodyks-Markram 모델).
 
-	If it is a tar.Z, you have to:
-	uncompress <filename.tar.Z>
-	and then,
-	tar xvf <filename.tar>
+"주소록 받기": weight_ram은 rd_pre=5 요청에 따라, 5번 뉴런과 연결된 친구들(post-synaptic 뉴런)의 목록을 스트림 방식으로 하나씩 보내줍니다. (예: rd_post=10, rd_weight=3 -> rd_post=25, rd_weight=5 ...)
 
-	If it is a zip file, use:
-	unzip <filename.zip>
+"펄스 계산": dynamic_synapse_processor는 주소록을 받으면서, 각 친구에게 보낼 실제 신호 세기(g_val)를 계산합니다. 이 값은 (고정된 가중치) * (실시간 동적 상태 u*x)로 결정됩니다.
 
-VI.     Setting the tool installation Paths:
+"펄스 발송": 계산된 값을 g_exc_pulse[10], g_exc_pulse[25] 등 해당 뉴런의 입력 포트로 1클록 동안 쏴줍니다.
 
-	>Open the cshrc file from  counter_design_database_45nm  directory
+3단계: 뉴런 상태 업데이트 및 발화 (Cortical Neuron Core)
 
-	>Replace your installation paths of each tool with a string <tool_installation> in the file cshrc
+입력: g_exc_pulse 배열 (예: 10번, 25번 뉴런 위치에 값이 들어옴), en = 1
 
+cortical_neuron_core_tm 모듈이 이 펄스들을 입력받습니다. 이 모듈은 시간 분할(Time-Multiplexing) 방식으로 동작합니다. 즉, 하나의 물리적 계산기로 0번부터 63번 뉴런까지 순서대로 빠르게 계산을 수행합니다.
 
-	For example: 
+동작:
 
-		setenv XLMHOME <tool_installation>/xcelium/2309/23.09.001
+자신의 차례가 된 10번, 25번 뉴런은 입력된 g_exc_pulse 값을 받아 자신의 막 전위(v)와 회복 변수(u)를 Izhikevich 모델 방정식에 따라 업데이트합니다.
 
-        If your tool path is this "/home/tools/install/XLS23/xcelium/2309/23.09.001/tools/bin" for the Xcelium Software. 
-	
-	Then replace <tool_installation> with "/home/tools/install/XLS23" in cshrc file like as shown below.
-	
-		setenv XLMHOME /home/tools/install/XLS23/xcelium/2309/23.09.001
+만약 이 계산 결과, 어떤 뉴런(예: 25번 뉴런)의 막 전위 v가 임계값(V_PEAK)을 넘으면, 그 뉴런은 '발화'합니다.
 
+"스파이크 출력!": cortical_neuron_core_tm은 발화한 뉴런에 해당하는 spike_out[25] 비트를 1로 설정하여 외부로 출력합니다. 이 spike_out은 다시 다른 뉴런들의 spike_in으로 연결될 수 있습니다.
 
-        >Source the cshrc without any errors.
+이것으로 스파이크 하나가 입력되어 네트워크를 통해 전파되는 한 사이클이 완료됩니다.
 
-	Typically the cshrc file set the paths of all the tools used in this course.
-	 
-  	   
-		
-	
+📈 학습 과정: 기억은 어떻게 수정되는가? (Plasticity)
+위의 신호 처리 과정과 동시에, plasticity_en=1이 되면서 state_dependent_plasticity 모듈도 활성화되어 학습을 시작합니다. 이 과정은 마치 사건의 인과관계를 따지는 수사관과 같습니다.
+
+1단계: 사건 접수 및 탐문 시작 (SCAN_PRE / SCAN_POST)
+
+spike_in[5]=1 (5번 뉴런에 '입력' 사건 발생) 또는 spike_out[25]=1 (25번 뉴런에 '출력' 사건 발생)을 감지합니다.
+
+사건 발생 시 FSM은 IDLE 상태에서 SCAN 상태로 전환됩니다.
+
+수사 착수:
+
+입력 사건(spike_in[5]) 기준: "5번 뉴런이 발화하기 직전에 발화했던 다른 뉴런은 누구인가?" (k_scan 인덱스를 0부터 N-1까지 돌며 탐색) -> LTP (연관성 강화) 후보
+
+출력 사건(spike_out[25]) 기준: "25번 뉴런이 발화하기 직전에 발화했던 입력 뉴런은 누구인가?" (k_scan 인덱스를 돌며 탐색) -> LTD (연관성 약화) 후보
+
+2단계: 증거 확보 (READ)
+
+탐문 결과, 인과관계가 의심되는 뉴런 쌍(예: 4번 뉴런이 발화하고 바로 뒤에 5번 뉴런이 발화)을 찾으면, 이 둘의 현재 관계를 확인해야 합니다.
+
+weight_ram에게 rr_en=1, rr_pre=4, rr_post=5 신호를 보내 "4번과 5번의 현재 연결 가중치가 얼마인가?"라고 물어봅니다.
+
+3단계: 상황 판단 및 최종 결정 (가중치 변화량 step 계산)
+
+weight_ram으로부터 현재 가중치(rr_weight)를 받으면, 이제 가중치를 얼마나 바꿀지 결정합니다. 이때 '상태 의존적(State-Dependent)' 특성이 드러납니다.
+
+특별 지시 (neuromod_signal): 이 신호가 1이면, 마치 '도파민'(보상)처럼 작용하여 가장 큰 폭(+3)으로 가중치를 강화합니다. (가장 우선순위가 높음)
+
+네트워크 분위기 (network_state): network_state_monitor가 알려준 전체 네트워크 상태를 참고합니다.
+
+LOW (조용함): "별일 아니군." -> 가중치 변화 없음 (step=0)
+
+MID (보통): "의미 있는 사건이야." -> 가중치를 보통 수준으로 변경 (step=1)
+
+HIGH (과열됨): "네트워크가 너무 흥분했어. 안정시켜야 해." -> 오히려 가중치를 감소시켜 과열을 막습니다 (step=-1, 항상성 가소성).
+
+4단계: 기록 수정 (WRITE)
+
+최종적으로 계산된 새로운 가중치(new_w)를 weight_ram에 w_en=1 신호와 함께 전달하여 저장합니다. 이로써 네트워크의 '기억'이 업데이트됩니다.
+
+모든 과정이 끝나면 FSM은 다시 IDLE 상태로 돌아가 다음 사건을 기다립니다.
+
+📜 보조 시스템의 역할
+network_state_monitor: 지속적으로 전체 뉴런의 spike_out을 세고, EMA 필터와 히스테리시스 로직을 통해 아주 안정적으로 네트워크의 전체 활동 레벨(LOW, MID, HIGH)을 판단하여 학습 모듈에 중요한 '상황 정보'를 제공합니다.
+
+weight_ram_adjlist: 모든 연결 정보를 '인접 리스트' 방식으로 저장하여, 특정 뉴런에 연결된 정보만 빠르게 스트리밍(Stream Read)하거나, 두 뉴런의 관계만 콕 집어 알려주는(Random Read) 등 다양한 요청에 효율적으로 응답하는 똑똑한 데이터베이스 역할을 합니다.
+
+이처럼 모든 모듈이 각자의 역할에 맞춰 이벤트가 발생할 때만 동작하고, 서로에게 필요한 정보를 주고받으며 전체적으로 지능적인 스파이킹 뉴런 네트워크를 구성합니다.
