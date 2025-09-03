@@ -1,0 +1,6 @@
+s1(16Aug2025:23:55:39):  xrun -64bit -access +rwc -timescale 1ns/1ps -f ./filelist.f -top tb_01_input_spike_index -linedebug -licqueue 
+s2(17Aug2025:00:13:21):  xrun -sv -64bit -access +rwc -timescale 1ns/1ps -f ./filelist.f -top tb_01_input_spike_index -linedebug -licqueue 
+s3(17Aug2025:00:23:03):  xrun -sv -64bit -access +rwc -timescale 1ns/1ps -f ./filelist.f -top tb_spike_generator -linedebug -licqueue 
+s4(17Aug2025:00:29:03):  xrun -sv -64bit -access +rwc -timescale 1ns/1ps -f ./filelist.f -top tb_spike_generator -linedebug -licqueue 
+s5(17Aug2025:00:35:32):  xrun -sv -64bit -access +rwc -timescale 1ns/1ps -f ./filelist.f -top tb_spike_generator -linedebug -licqueue 
+s6(17Aug2025:00:38:59):  xrun -sv -64bit -access +rwc -timescale 1ns/1ps -f ./filelist.f -top tb_spike_generator -linedebug -licqueue 

@@ -1,0 +1,81 @@
+I.      Course Title:
+
+        6.0 Cadence RTL to GDSII - Course Database
+
+II.     Course Developer:
+
+        Pamula Sai Srinivas pamulasa@cadence.com
+
+III.    Minimum Hardware Requirements:
+	Make sure you have installed all the software needed for these labs. 
+	Look up the hardware (HW) requirements for the software from 
+	http://downloads.cadence.com 
+
+	For some software, you can also run checkSysConf <RelName>.
+	To see a list of software that allows checkSysConf, use 
+	checkSysConf -r
+
+	We do not require parallel processing for these labs, but a parallel processing step 
+	might require additional setup and HW.
+
+	Lab requirement - retain at least 500 MB for the course 
+	duration for saving of intermediate files and designs.
+
+IV.     Software Products Required:
+
+	An X-Window environment is required to run the software.
+        
+	This course uses the following software:
+		Xcelium Simulator (XCELIUM2309)
+		Integrated Metric Center (VMANAGER2309,XCELIUM2309)
+		Genus Synthesis Solution (GENUS231)
+		Encounter Test or Modus (MODUS231)
+		Conformal Logic Equivalence Checker (CONFRML232)
+		Innovus Implementation System (INNOVUS231)
+		Tempus Timing Signoff Solution (SSV231)
+		Voltus Power Signoff Solution (SSV231)
+		Quantus RC Extraction (SSV231)
+
+        Software reference Manuals are available online at http://support.cadence.com.
+
+V.      Loading and Set Up of Database
+	Once you have the database, make sure that the files inside are complete and not corrupt.
+	If it is a tar,gz, you will have to:
+	tar zxvf <filename.tar.gz>
+	OR
+	gunzip <filename.tar.gz>
+	tar xvf <filename.tar>
+
+	If it is a tar.Z, you have to:
+	uncompress <filename.tar.Z>
+	and then,
+	tar xvf <filename.tar>
+
+	If it is a zip file, use:
+	unzip <filename.zip>
+
+VI.     Setting the tool installation Paths:
+
+	>Open the cshrc file from  counter_design_database_45nm  directory
+
+	>Replace your installation paths of each tool with a string <tool_installation> in the file cshrc
+
+
+	For example: 
+
+		setenv XLMHOME <tool_installation>/xcelium/2309/23.09.001
+
+        If your tool path is this "/home/tools/install/XLS23/xcelium/2309/23.09.001/tools/bin" for the Xcelium Software. 
+	
+	Then replace <tool_installation> with "/home/tools/install/XLS23" in cshrc file like as shown below.
+	
+		setenv XLMHOME /home/tools/install/XLS23/xcelium/2309/23.09.001
+
+
+        >Source the cshrc without any errors.
+
+	Typically the cshrc file set the paths of all the tools used in this course.
+	 
+  	   
+		
+	

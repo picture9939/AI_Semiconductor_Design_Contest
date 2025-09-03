@@ -1,0 +1,31 @@
+Cadence Genus(TM) Synthesis Solution.
+Copyright 2024 Cadence Design Systems, Inc. All rights reserved worldwide.
+Cadence and the Cadence logo are registered trademarks and Genus is a trademark
+of Cadence Design Systems, Inc. in the United States and other countries.
+
+[07:47:23.289725] Configured Lic search path (23.02-s003): 5280@sjflex1:5280@sjflex2:5280@sjflex3:5280@noidalic11:5281@noidalic11
+
+Version: 23.10-p004_1, built Thu Feb 01 13:43:46 PST 2024
+Options: 
+Date:    Mon Mar 25 07:47:23 2024
+Host:    sjcvl-pamulasa (x86_64 w/Linux 3.10.0-957.5.1.el7.x86_64) (1core*2cpus*3physical cpus*Intel(R) Xeon(R) Gold 6248 CPU @ 2.50GHz 28160KB) (8009496KB)
+PID:     16548
+OS:      Red Hat Enterprise Linux Workstation release 7.6 (Maipo)
+
+Checking out license: Genus_Synthesis
+[07:47:23.058408] Periodic Lic check successful
+[07:47:23.582714] Feature usage summary:
+[07:47:23.582715] Genus_Synthesis
+
+
+
+***********************************************************************************************************
+***********************************************************************************************************
+
+
+
+Finished executable startup (1 second elapsed).
+
+Loading tool scripts...
+Finished loading tool scripts (31 seconds elapsed).
+
