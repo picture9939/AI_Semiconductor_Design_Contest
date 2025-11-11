@@ -1,0 +1,6 @@
+define XMSIMRC	( /home/tools/cadence/XCELIUMMAIN2309/tools/xcelium/files/xmsimrc, ~/.xmsimrc )
+define AMSRC	( /home/tools/cadence/XCELIUMMAIN2309/tools/xcelium/files/amsrc, ~/.amsrc )
+include ./hdlrun.var
+define SNAPSHOT worklib.weight_rom:v
+DEFINE RUNMODEDEFAULT 1
+DEFINE LIB_MAP ( + => worklib )

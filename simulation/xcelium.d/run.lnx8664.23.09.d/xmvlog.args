@@ -1,0 +1,28 @@
+//
+// File created by:  xrun
+// Do not modify this file
+//
+-XLMODE
+./xcelium.d/run.lnx8664.23.09.d
+-RUNMODE
+-sv
+-INCDIR
+../rtl
+-INCDIR
+../simulation
+../rtl/01_input_spike_index.v
+../rtl/08_weight_rom.v
+../rtl/neuron_top.v
+../simulation/tb_01_input_spike_index.v
+-LINEDEBUG
+-CDSLIB
+./xcelium.d/run.lnx8664.23.09.d/cdsrun.lib
+-HDLVAR
+./xcelium.d/run.lnx8664.23.09.d/hdlrun.var
+-no_analogsolver
+-MESSAGES
+-UPDATE
+-XLLIBSTORE
+./xcelium.d/run.lnx8664.23.09.d/xllibs
+-ALLOWUNBOUND
+-hastop

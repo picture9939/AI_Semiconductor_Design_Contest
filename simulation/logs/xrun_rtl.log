@@ -1,0 +1,155 @@
+xrun(64): 23.09-s013: (c) Copyright 1995-2024 Cadence Design Systems, Inc.
+TOOL:	xrun(64)	23.09-s013: Started on Oct 31, 2025 at 11:52:40 KST
+xrun
+	-64bit
+	-sv
+	-timescale 1ns/1ps
+	-f filelist.f
+		+incdir+../rtl
+		../rtl/ai_neuron_top_comp_v2.sv
+		../rtl/cortical_neuron_core_tm.sv
+		../rtl/dynamic_synapse_processor_stream_v2.sv
+		../rtl/g_pulse_accumulator.sv
+		../rtl/lfsr32.sv
+		../rtl/motor_decoder_4dir.sv
+		../rtl/network_state_monitor.sv
+		../rtl/physics_integrator_2d.sv
+		../rtl/power_manager.sv
+		../rtl/pressure_sensor_field_3ch.sv
+		../rtl/spike_rate_lp.sv
+		../rtl/state_dependent_plasticity.sv
+		../rtl/synapse_event_fifo.sv
+		../rtl/tof_delay_line.sv
+		../rtl/weight_ram_adjlist.sv
+		./tb_top.sv
+	+access+rwc
+	-nowarn DLCPTH
+	-nowarn VARIST
+	-nowarn SVBDDT
+	-l logs/xrun_rtl.log
+file: ../rtl/ai_neuron_top_comp_v2.sv
+	module worklib.ai_neuron_top_comp_v2:sv
+		errors: 0, warnings: 0
+file: ../rtl/cortical_neuron_core_tm.sv
+	module worklib.cortical_neuron_core_tm:sv
+		errors: 0, warnings: 0
+file: ../rtl/dynamic_synapse_processor_stream_v2.sv
+	module worklib.dynamic_synapse_processor_stream_v2:sv
+		errors: 0, warnings: 0
+file: ../rtl/g_pulse_accumulator.sv
+	module worklib.g_pulse_accumulator:sv
+		errors: 0, warnings: 0
+file: ../rtl/lfsr32.sv
+	module worklib.lfsr32:sv
+		errors: 0, warnings: 0
+file: ../rtl/motor_decoder_4dir.sv
+	module worklib.motor_decoder_4dir:sv
+		errors: 0, warnings: 0
+file: ../rtl/network_state_monitor.sv
+	module worklib.network_state_monitor:sv
+		errors: 0, warnings: 0
+file: ../rtl/physics_integrator_2d.sv
+	module worklib.physics_integrator_2d:sv
+		errors: 0, warnings: 0
+file: ../rtl/power_manager.sv
+	module worklib.power_manager:sv
+		errors: 0, warnings: 0
+file: ../rtl/pressure_sensor_field_3ch.sv
+	module worklib.pressure_sensor_field_3ch:sv
+		errors: 0, warnings: 0
+file: ../rtl/spike_rate_lp.sv
+	module worklib.spike_rate_lp:sv
+		errors: 0, warnings: 0
+file: ../rtl/state_dependent_plasticity.sv
+	module worklib.state_dependent_plasticity:sv
+		errors: 0, warnings: 0
+file: ../rtl/synapse_event_fifo.sv
+	module worklib.synapse_event_fifo:sv
+		errors: 0, warnings: 0
+file: ../rtl/tof_delay_line.sv
+	module worklib.tof_delay_line:sv
+		errors: 0, warnings: 0
+file: ../rtl/weight_ram_adjlist.sv
+	module worklib.weight_ram_adjlist:sv
+		errors: 0, warnings: 0
+file: ./tb_top.sv
+	module worklib.tb_top:sv
+		errors: 0, warnings: 0
+xmvlog: *W,SPDUSD: Include directory ../rtl given but not used.
+	Total errors/warnings found outside modules and primitives:
+		errors: 0, warnings: 1
+		Caching library 'worklib' ....... Done
+	Elaborating the design hierarchy:
+	Top level design units:
+		cortical_neuron_core_tm
+		state_dependent_plasticity
+		synapse_event_fifo
+		tb_top
+	Building instance overlay tables: .................... Done
+	Generating native compiled code:
+		worklib.spike_rate_lp:sv <0x0695d323>
+			streams:   4, words:  1148
+		worklib.g_pulse_accumulator:sv <0x333ab9e2>
+			streams:   5, words:  2285
+		worklib.motor_decoder_4dir:sv <0x7103c640>
+			streams:   3, words:  1856
+		worklib.weight_ram_adjlist:sv <0x242dbb72>
+			streams:  16, words:  6113
+		worklib.dynamic_synapse_processor_stream_v2:sv <0x17ba7cd3>
+			streams:  20, words:  7062
+		worklib.tof_delay_line:sv <0x5b98e386>
+			streams:   9, words:  9343
+		worklib.lfsr32:sv <0x53d41d11>
+			streams:   3, words:   740
+		worklib.physics_integrator_2d:sv <0x71bea17b>
+			streams:  17, words:  9507
+		worklib.power_manager:sv <0x0f33e2d6>
+			streams:   2, words:   475
+		worklib.ai_neuron_top_comp_v2:sv <0x7a735419>
+			streams:  47, words: 19419
+		worklib.tb_top:sv <0x2a3c99f0>
+			streams:  10, words:  5425
+		worklib.synapse_event_fifo:sv <0x7c57e786>
+			streams:   9, words:  3052
+		worklib.state_dependent_plasticity:sv <0x47374cb4>
+			streams:   6, words:  2044
+		worklib.cortical_neuron_core_tm:sv <0x4f3886e3>
+			streams:  11, words:  4239
+		worklib.pressure_sensor_field_3ch:sv <0x65672c7f>
+			streams:  20, words: 16731
+		worklib.network_state_monitor:sv <0x7ef6db1a>
+			streams:   5, words:  3138
+	Building instance specific data structures.
+	Loading native compiled code:     .................... Done
+	Design hierarchy summary:
+		                 Instances  Unique
+		Modules:                85      16
+		Registers:             421     183
+		Scalar wires:           79       -
+		Expanded wires:         64       1
+		Vectored wires:        215       -
+		Always blocks:         178      34
+		Initial blocks:         73      10
+		Cont. assignments:      38      35
+		Pseudo assignments:    125       -
+		Process Clocks:         93       4
+		Simulation timescale:  1ps
+	Writing initial simulation snapshot: worklib.cortical_neuron_core_tm:sv
+Loading snapshot worklib.cortical_neuron_core_tm:sv .................... Done
+xcelium> source /home/tools/cadence/XCELIUMMAIN2309/tools/xcelium/files/xmsimrc
+xcelium> run
+xmsim: *W,MCONDE: Unique case violation:  Multiple matching case item expressions at {line=74:pos=15 and line=75:pos=15}.
+            File: ../rtl/ai_neuron_top_comp_v2.sv, line = 73, pos = 16
+           Scope: tb_top.u_dut
+            Time: 235 NS + 4
+
+xmsim: *W,MCONDE: Unique case violation:  Multiple matching case item expressions at {line=74:pos=15 and line=75:pos=15}.
+            File: ../rtl/ai_neuron_top_comp_v2.sv, line = 73, pos = 16
+           Scope: tb_top.u_dut
+            Time: 245 NS + 6
+
+[1999995000] INFO: MAX_CYCLES reached. Finishing.
+Simulation complete via $finish(1) at time 1999995 NS + 0
+./tb_top.sv:55     $finish;
+xcelium> exit
+TOOL:	xrun(64)	23.09-s013: Exiting on Oct 31, 2025 at 11:52:42 KST  (total: 00:00:02)

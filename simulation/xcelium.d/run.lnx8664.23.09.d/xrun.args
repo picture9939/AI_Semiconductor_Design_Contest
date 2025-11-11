@@ -1,0 +1,16 @@
+//
+// File created by:  xrun
+// Do not modify this file
+//
+-sv
+-64bit
+-access
++rwc
+-timescale
+1ns/1ps
+-f
+./filelist.f
+-top
+tb_spike_generator
+-linedebug
+-licqueue
